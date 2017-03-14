@@ -14,7 +14,6 @@ class GpioHandler(object):
 
 
     def numberPassesCallback(self, channel):
-        # hihi
         self.numCount += 1
 
     def wheelFinishedCallback(self, channel):
