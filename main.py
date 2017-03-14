@@ -59,6 +59,6 @@ i = 0
 # Loop forever, doing something useful hopefully:
 while True:
     logger.info("The counter is now " + str(i))
-    print "This is a print"
+    print("This is a print")
     i += 1
     time.sleep(5)
