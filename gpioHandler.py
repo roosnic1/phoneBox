@@ -8,8 +8,8 @@ class GpioHandler(object):
         GPIO.setup(24, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         # GPIO.setup(25, GPIO.IN)
         self.numCount = 0
-        GPIO.add_event_detect(24, GPIO.FALLING, callback=self.wheelFinishedCallback, bouncetime=80)
-        GPIO.add_event_detect(23, GPIO.FALLING, callback=self.numberPassesCallback, bouncetime=20)
+        GPIO.add_event_detect(24, GPIO.FALLING, callback=self.wheelFinishedCallback, bouncetime=20)
+        GPIO.add_event_detect(23, GPIO.FALLING, callback=self.numberPassesCallback, bouncetime=80)
 
 
     def numberPassesCallback(self, channel):
