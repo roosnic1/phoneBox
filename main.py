@@ -6,6 +6,8 @@ import logging.handlers
 import sys
 import time  # this is only being used as part of the example
 
+from gpioHandler import GpioHandler
+
 # Deafults
 LOG_FILENAME = "/tmp/myservice.log"
 LOG_LEVEL = logging.INFO  # Could be e.g. "DEBUG" or "WARNING"
@@ -50,3 +52,4 @@ sys.stdout = MyLogger(logger, logging.INFO)
 # Replace stderr with logging to file at ERROR level
 sys.stderr = MyLogger(logger, logging.ERROR)
 
+gpio = GpioHandler()
