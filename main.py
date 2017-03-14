@@ -52,7 +52,11 @@ class MyLogger(object):
 # Replace stderr with logging to file at ERROR level
 # sys.stderr = MyLogger(logger, logging.ERROR)
 
-gpio = GpioHandler()
+def testCallbackFun(self, number):
+    print('Main Py')
+    print(number)
+
+gpio = GpioHandler(testCallbackFun)
 
 i = 0
 print("Starting phoneBox")
