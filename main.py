@@ -9,7 +9,7 @@ import time  # this is only being used as part of the example
 from gpioHandler import GpioHandler
 
 # Deafults
-LOG_FILENAME = "/tmp/myservice.log"
+LOG_FILENAME = "./myservice.log"
 LOG_LEVEL = logging.INFO  # Could be e.g. "DEBUG" or "WARNING"
 
 # Define and parse command line arguments
@@ -48,9 +48,9 @@ class MyLogger(object):
             self.logger.log(self.level, message.rstrip())
 
 # Replace stdout with logging to file at INFO level
-sys.stdout = MyLogger(logger, logging.INFO)
+# sys.stdout = MyLogger(logger, logging.INFO)
 # Replace stderr with logging to file at ERROR level
-sys.stderr = MyLogger(logger, logging.ERROR)
+# sys.stderr = MyLogger(logger, logging.ERROR)
 
 gpio = GpioHandler()
 

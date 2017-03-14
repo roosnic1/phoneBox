@@ -13,6 +13,7 @@ class GpioHandler(object):
 
 
     def numberPassesCallback(self, channel):
+        print("numberPassedCallback called")
         self.numCount += 1
 
     def wheelFinishedCallback(self, channel):
