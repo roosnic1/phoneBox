@@ -55,10 +55,8 @@ class MyLogger(object):
 gpio = GpioHandler()
 
 i = 0
-
+print("Starting phoneBox")
 # Loop forever, doing something useful hopefully:
 while True:
-    logger.info("The counter is now " + str(i))
-    print("This is a print")
     i += 1
     time.sleep(5)
