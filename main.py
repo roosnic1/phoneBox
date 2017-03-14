@@ -52,7 +52,7 @@ class MyLogger(object):
 # Replace stderr with logging to file at ERROR level
 # sys.stderr = MyLogger(logger, logging.ERROR)
 
-def testCallbackFun(self, number):
+def testCallbackFun(number):
     print('Main Py')
     print(number)
 
