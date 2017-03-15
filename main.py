@@ -2,7 +2,6 @@
 
 import logging
 import logging.handlers
-# import argparse
 import sys
 import time  # this is only being used as part of the example
 
@@ -11,15 +10,6 @@ from gpioHandler import GpioHandler
 # Deafults
 LOG_FILENAME = "./myservice.log"
 LOG_LEVEL = logging.INFO  # Could be e.g. "DEBUG" or "WARNING"
-
-# Define and parse command line arguments
-# parser = argparse.ArgumentParser(description="My simple Python service")
-# parser.add_argument("-l", "--log", help="file to write log to (default '" + LOG_FILENAME + "')")
-
-# If the log file is specified on the command line then override the default
-# args = parser.parse_args()
-# if args.log:
-#    LOG_FILENAME = args.log
 
 # Configure logging to log to a file, making a new file at midnight and keeping the last 3 day's data
 # Give the logger a unique name (good practice)
@@ -35,7 +25,7 @@ handler.setFormatter(formatter)
 # Attach the handler to the logger
 logger.addHandler(handler)
 
-# Make a class we can use to capture stdout and sterr in the log
+# Make a class we can use to capture stdout and stderr in the log
 class MyLogger(object):
     def __init__(self, logger, level):
         """Needs a logger and a logger level."""
