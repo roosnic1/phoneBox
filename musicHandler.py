@@ -1,4 +1,5 @@
 import pygame
+import json
 file = '123.mp3'
 
 while pygame.mixer.music.get_busy():
@@ -6,22 +7,20 @@ while pygame.mixer.music.get_busy():
 
 class MusicHandler(object):
 
-    def __init__(self, musicLib):
-        self.musicLib = musicLib
+    def __init__(self, musicLibJSON):
+        with open(musicLibJSON) as jsonData:
+            self.musicLib = json.load(jsonData)
         self.musicQueue = []
         pygame.init()
         pygame.mixer.init()
 
-    def play(self, disc, track):
+    def play(self, disc, track)
+        musicFile = self.musicLib[disc][track]
         if pygame.mixer.get_busy():
-            pass # load the queue
+            self.musicQueue.append(musicFile)
         else:
-            pygame.mixer.music.load(file)
+            pygame.mixer.music.load(musicFile)
             pygame.mixer.music.play()
-
-    def _getFile(self, disc, track):
-        # get file from musicLib
-        return '123.mp3'
 
 
 
