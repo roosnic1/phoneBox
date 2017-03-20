@@ -1,9 +1,10 @@
-import pygame
+import pygame.event
+import pygame.mixer
 import json
-file = '123.mp3'
+import threading
+import time
 
-while pygame.mixer.music.get_busy():
-    pygame.time.Clock().tick(10)
+ENDEVENT=42
 
 class MusicHandler(object):
 
@@ -13,12 +14,29 @@ class MusicHandler(object):
         self.musicQueue = []
         pygame.init()
         pygame.mixer.init()
+        pygame.mixer.music.set_endevent(ENDEVENT)
+        t = threading.Thread(target=self._songend_bubble, args=(self,))
+        t.daemon = True
+        t.start()
 
-    def play(self, disc, track)
+    def _songend_bubble(s,self):
+        while 1:
+            event = pygame.event.get(ENDEVENT)
+            if event:
+                print('received end event')
+                if(len(self.musicQueue) > 0):
+                    pygame.mixer.music.load(self.musicQueue.pop(0))
+                    pygame.mixer.music.play()
+            else:
+                time.sleep(0.1)
+
+    def play(self, disc, track):
         musicFile = self.musicLib[disc][track]
-        if pygame.mixer.get_busy():
+        if pygame.mixer.music.get_busy():
+            print('player busy')
             self.musicQueue.append(musicFile)
         else:
+            print('player not busy')
             pygame.mixer.music.load(musicFile)
             pygame.mixer.music.play()
 
