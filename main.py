@@ -5,7 +5,9 @@ import logging.handlers
 import sys
 import time  # this is only being used as part of the example
 
-from gpioHandler import GpioHandler
+from musicHandler import MusicHandler
+
+#from gpioHandler import GpioHandler
 
 # Deafults
 LOG_FILENAME = "./myservice.log"
@@ -46,7 +48,14 @@ def testCallbackFun(trackId, discId):
     print('Main Py')
     print(number)
 
-gpio = GpioHandler(testCallbackFun)
+#gpio = GpioHandler(testCallbackFun)
+
+music = MusicHandler('./musicLib.json')
+time.sleep(5)
+print("blabla")
+music.play('00', '00')
+time.sleep(5)
+music.play('01', '00')
 
 i = 0
 print("Starting phoneBox")
