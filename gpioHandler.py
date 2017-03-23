@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 import time
+from array import array
 from Adafruit_LED_Backpack.SevenSegment import SevenSegment
 
 class GpioHandler(object):
@@ -18,10 +19,9 @@ class GpioHandler(object):
         GPIO.add_event_detect(24, GPIO.FALLING, callback=self.wheelFinishedCallback, bouncetime=20)
 
         # Create display instance on default I2C address (0x70) and bus number.
-        display = SevenSegment.SevenSegment()
-        display.begin()
-        colon = False
-        display.clear()
+        self.display = SevenSegment.SevenSegment()
+        self.display.begin()
+        self.display.clear()
 
 
     def numberPassesCallback(self, channel):
@@ -31,6 +31,9 @@ class GpioHandler(object):
         self.displayRefresher()
 
     def wheelStartedCallback(self, Channel):
+        if self.numberIter == 0:
+            self.numberChoosen = array('I', [0,0,0,0])
+        self.displayRefresher()
 
 
     def wheelFinishedCallback(self, channel):
@@ -51,5 +54,6 @@ class GpioHandler(object):
 
 
     def displayRefresher(self):
-        SevenSegment.print_number_str(''.join(str(x) for x in self.numberChoosen)
-
+        self.display.clear()
+        self.display.print_number_str(''.join(str(x) for x in self.numberChoosen))
+        self.display.write_display()
