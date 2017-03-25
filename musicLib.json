@@ -1,11 +1,11 @@
 {
   "00": {
-    "00": "testData/1.mp3",
-    "01": "testData/2.mp3",
-    "02": "testData/3.mp3"
+    "00": "testData/song1.mp3",
+    "01": "testData/song2.mp3",
+    "02": "testData/song3.mp3"
   },
   "01": {
-    "00": "testData/4.mp3",
-    "01": "testData/5.mp3"
+    "00": "testData/song4.mp3",
+    "01": "testData/song5.mp3"
   }
 }

@@ -44,18 +44,16 @@ class MyLogger(object):
 # Replace stderr with logging to file at ERROR level
 # sys.stderr = MyLogger(logger, logging.ERROR)
 
-def testCallbackFun(trackId, discId):
-    print('Main Py')
-    print(number)
-
 #gpio = GpioHandler(testCallbackFun)
 
 music = MusicHandler('./musicLib.json')
-time.sleep(5)
+time.sleep(2)
 print("blabla")
 music.play('00', '00')
-time.sleep(5)
+time.sleep(2)
 music.play('01', '00')
+time.sleep(2)
+music.play('01', '01')
 
 i = 0
 print("Starting phoneBox")

@@ -1,10 +1,23 @@
-import pygame.event
-import pygame.mixer
 import json
-import threading
-import time
+import musicplayer
 
 ENDEVENT=42
+i = 0
+
+class Song:
+    def __init__(self, fn):
+        self.url = fn
+        self.f = open(fn)
+    # `__eq__` is used for the peek stream management
+    def __eq__(self, other):
+        return self.url == other.url
+    # this is used by the player as the data interface
+    def readPacket(self, bufSize):
+        return self.f.read(bufSize)
+    def seekRaw(self, offset, whence):
+        r = self.f.seek(offset, whence)
+        return self.f.tell()
+
 
 class MusicHandler(object):
 
@@ -12,33 +25,19 @@ class MusicHandler(object):
         with open(musicLibJSON) as jsonData:
             self.musicLib = json.load(jsonData)
         self.musicQueue = []
-        pygame.init()
-        pygame.mixer.init()
-        pygame.mixer.music.set_endevent(ENDEVENT)
-        t = threading.Thread(target=self._songend_bubble, args=(self,))
-        t.daemon = True
-        t.start()
-
-    def _songend_bubble(s,self):
-        while 1:
-            event = pygame.event.get(ENDEVENT)
-            if event:
-                print('received end event')
-                if(len(self.musicQueue) > 0):
-                    pygame.mixer.music.load(self.musicQueue.pop(0))
-                    pygame.mixer.music.play()
-            else:
-                time.sleep(0.1)
+        # Create our Music Player.
+        self.player = musicplayer.createPlayer()
+        self.player.outSamplerate = 96000 # support high quality :)
+        self.player.queue = self.songs()
 
     def play(self, disc, track):
-        musicFile = self.musicLib[disc][track]
-        if pygame.mixer.music.get_busy():
-            print('player busy')
-            self.musicQueue.append(musicFile)
-        else:
-            print('player not busy')
-            pygame.mixer.music.load(musicFile)
-            pygame.mixer.music.play()
+        self.musicQueue.append(self.musicLib[disc][track])
+        self.player.playing = True
 
 
-
+    def songs(self):
+        global i
+        while True:
+            yield Song(self.musicQueue[i])
+            i += 1
+            if i >= len(self.musicQueue): i = 0
