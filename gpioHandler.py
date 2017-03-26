@@ -12,7 +12,7 @@ class GpioHandler(object):
         # GPIO.setup(25, GPIO.IN)
         self.numCount = 0
         self.numberCallback = numberCallback
-        self.numberDisplay = array('I', [0, 0, 0, 0])
+        #self.numberDisplay = array('I', [0, 0, 0, 0])
         self.numberIter = 0
         GPIO.add_event_detect(23, GPIO.FALLING, callback=self.numberPassesCallback, bouncetime=80)
         GPIO.add_event_detect(24, GPIO.RISING, callback=self.wheelStartedCallback, bouncetime=20)
