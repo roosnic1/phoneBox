@@ -1,9 +1,6 @@
 import json
 import musicplayer
 
-ENDEVENT=42
-i = 0
-
 class Song:
     def __init__(self, fn):
         self.url = fn
@@ -21,23 +18,26 @@ class Song:
 
 class MusicHandler(object):
 
-    def __init__(self, musicLibJSON):
+    def __init__(self, musicLibJSON, setDisplayCallback):
         with open(musicLibJSON) as jsonData:
             self.musicLib = json.load(jsonData)
         self.musicQueue = []
         # Create our Music Player.
         self.player = musicplayer.createPlayer()
-        self.player.outSamplerate = 96000 # support high quality :)
+        self.player.outSamplerate = 96000  # support high quality :)
         self.player.queue = self.songs()
+        self.queuePosition = 0
+        self.setDisplayCallback = setDisplayCallback
 
     def play(self, disc, track):
-        self.musicQueue.append(self.musicLib[disc][track])
+        self.musicQueue.append((self.musicLib[disc][track], disc + track))
         self.player.playing = True
 
-
     def songs(self):
-        global i
         while True:
-            yield Song(self.musicQueue[i])
-            i += 1
-            if i >= len(self.musicQueue): i = 0
+            currentsong = self.musicQueue[self.queuePosition]
+            self.setDisplayCallback(currentsong[1])
+            yield Song(currentsong[0])
+            self.queuePosition += 1
+            if self.queuePosition >= len(self.musicQueue):
+                self.queuePosition = 0

@@ -50,7 +50,11 @@ def testCallbackFunc(disc, track):
 
 #gpio = GpioHandler(testCallbackFunc)
 
-music = MusicHandler('./musicLib.json')
+
+def testMusicCallbackFunc(string):
+    print('string', string)
+
+music = MusicHandler('./musicLib.json', testMusicCallbackFunc)
 time.sleep(2)
 print("blabla")
 music.play('00', '00')
