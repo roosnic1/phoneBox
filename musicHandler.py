@@ -1,5 +1,5 @@
-import json
 import musicplayer
+import os.path
 
 class Song:
     def __init__(self, fn):
@@ -18,10 +18,9 @@ class Song:
 
 class MusicHandler(object):
 
-    def __init__(self, musicLibJSON, setDisplayCallback):
-        with open(musicLibJSON) as jsonData:
-            self.musicLib = json.load(jsonData)
+    def __init__(self, musicDir, setDisplayCallback):
         self.musicQueue = []
+        self.musicDir = musicDir
         # Create our Music Player.
         self.player = musicplayer.createPlayer()
         self.player.outSamplerate = 96000  # support high quality :)
@@ -30,8 +29,12 @@ class MusicHandler(object):
         self.setDisplayCallback = setDisplayCallback
 
     def play(self, disc, track):
-        self.musicQueue.append((self.musicLib[disc][track], disc + track))
+        songfile = self.musicDir + '/' + disc + '/' + track + '.mp3'
+        if not os.path.isfile(songfile):
+            return self.musicQueue[self.queuePosition][1]
+        self.musicQueue.append((songfile, disc + track))
         self.player.playing = True
+        return self.musicQueue[self.queuePosition][1]
 
     def songs(self):
         while True:

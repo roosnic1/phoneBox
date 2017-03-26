@@ -54,8 +54,7 @@ def testCallbackFunc(disc, track):
 def testMusicCallbackFunc(string):
     print('string', string)
 
-music = MusicHandler('./musicLib.json', testMusicCallbackFunc)
-time.sleep(2)
+music = MusicHandler('./testData', testMusicCallbackFunc)
 print("blabla")
 music.play('00', '00')
 time.sleep(2)
