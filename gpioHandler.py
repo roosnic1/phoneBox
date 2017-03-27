@@ -44,7 +44,7 @@ class GpioHandler(object):
             currentSong = self.numberCallback(discID, songID)
             if not currentSong[0]:
                 for i,val in enumerate(self.numberDisplay):
-                    self.numberDisplay[i] = '_'
+                    self.numberDisplay[i] = '-'
                 self.displayRefresher()
             for i, val in enumerate(currentSong[1]):
                 self.numberDisplay[i] = val
