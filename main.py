@@ -7,7 +7,7 @@ import time  # this is only being used as part of the example
 
 #from musicHandler import MusicHandler
 
-#from gpioHandler import GpioHandler
+from gpioHandler import GpioHandler
 
 # Deafults
 LOG_FILENAME = "./myservice.log"
