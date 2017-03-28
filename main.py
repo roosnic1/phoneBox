@@ -48,6 +48,7 @@ def testCallbackFunc(disc, track):
     print('Disc', disc)
     print('Track', track)
 
+print('start')
 gpio = GpioHandler(testCallbackFunc)
 
 
