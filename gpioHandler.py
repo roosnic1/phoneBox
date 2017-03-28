@@ -21,7 +21,7 @@ class GpioHandler(object):
         # Create display instance on default I2C address (0x70) and bus number.
         self.display = SevenSegment.SevenSegment()
         self.display.begin()
-        self.display.print_float(1.0)
+        self.display.print_number_str('1234')
         self.display.write_display()
         print('did start')
         self.display.clear()
