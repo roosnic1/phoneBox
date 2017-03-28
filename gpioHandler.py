@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO
 import time
 from array import array
-from Adafruit_LED_Backpack.SevenSegment import SevenSegment
+from Adafruit_LED_Backpack import SevenSegment
 
 class GpioHandler(object):
 
