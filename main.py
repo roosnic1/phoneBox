@@ -63,9 +63,9 @@ gpio = GpioHandler(testCallbackFunc)
 # time.sleep(2)
 # music.play('01', '01')
 #
-# i = 0
-# print("Starting phoneBox")
-# # Loop forever, doing something useful hopefully:
-# while True:
-#     i += 1
-#     time.sleep(5)
+i = 0
+print("Starting phoneBox")
+# Loop forever, doing something useful hopefully:
+while True:
+    i += 1
+    time.sleep(5)
