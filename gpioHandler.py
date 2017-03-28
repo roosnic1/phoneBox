@@ -23,7 +23,7 @@ class GpioHandler(object):
         self.display.begin()
         self.display.print_float(1.0)
         self.display.write_display()
-        time.sleep(1)
+        print('did start')
         self.display.clear()
 
 
@@ -32,6 +32,7 @@ class GpioHandler(object):
         if self.numberDisplay[self.numberIter] == 10:
             self.numberDisplay[self.numberIter] = 0
         self.displayRefresher()
+        print('number passed')
 
     def wheelCallback(self, Channel):
         time.sleep(0.02)
