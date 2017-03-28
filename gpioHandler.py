@@ -28,15 +28,16 @@ class GpioHandler(object):
 
 
     def numberPassesCallback(self, channel):
+        print('number passed')
+
         self.numberDisplay[self.numberIter] += 1
         if self.numberDisplay[self.numberIter] == 10:
             self.numberDisplay[self.numberIter] = 0
         self.displayRefresher()
-        print('number passed')
 
     def wheelCallback(self, Channel):
+        print('wheel passed')
         time.sleep(0.02)
-        print('was here')
         if GPIO.input(24):
             print('was pos edge')
             if self.numberIter == 0:
