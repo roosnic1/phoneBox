@@ -9,7 +9,6 @@ class GpioHandler(object):
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(23, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         GPIO.setup(24, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        # GPIO.setup(25, GPIO.IN)
         self.numCount = 0
         self.numberCallback = numberCallback
         #self.numberDisplay = array('I', [0, 0, 0, 0])
@@ -33,7 +32,11 @@ class GpioHandler(object):
 
     def wheelCallback(self, Channel):
         time.sleep(0.02)
-        if (GPIO.input(24) == 0):
+        if GPIO.input(24):
+            if self.numberIter == 0:
+                self.numberDisplay = array('I', [0, 0, 0, 0])
+            self.displayRefresher()
+        else:
             self.numberIter += 1
             if self.numberIter >= 4:
                 discID = ''.join(str(x) for x in self.numberDisplay[:2])
@@ -48,10 +51,6 @@ class GpioHandler(object):
                 time.sleep(1)
                 self.displayRefresher()
                 self.numberIter = 0
-        else:
-            if self.numberIter == 0:
-                self.numberDisplay = array('I', [0, 0, 0, 0])
-            self.displayRefresher()
 
     # def wheelStartedCallback(self, Channel):
     #     if self.numberIter == 0:
