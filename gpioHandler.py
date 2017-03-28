@@ -35,11 +35,14 @@ class GpioHandler(object):
 
     def wheelCallback(self, Channel):
         time.sleep(0.02)
+        print('was here')
         if GPIO.input(24):
+            print('was pos edge')
             if self.numberIter == 0:
                 self.numberDisplay = array('I', [0, 0, 0, 0])
             self.displayRefresher()
         else:
+            print('was neg edge')
             self.numberIter += 1
             if self.numberIter >= 4:
                 discID = ''.join(str(x) for x in self.numberDisplay[:2])
