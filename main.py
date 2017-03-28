@@ -5,7 +5,7 @@ import logging.handlers
 import sys
 import time  # this is only being used as part of the example
 
-#from musicHandler import MusicHandler
+from musicHandler import MusicHandler
 
 from gpioHandler import GpioHandler
 
@@ -47,15 +47,17 @@ class MyLogger(object):
 def testCallbackFunc(disc, track):
     print('Disc', disc)
     print('Track', track)
+    music.play(disc, track)
+
 
 print('start')
 gpio = GpioHandler(testCallbackFunc)
 
 
-# def testMusicCallbackFunc(string):
-#    print('string', string)
+def testMusicCallbackFunc(string):
+    print('string', string)
 #
-# music = MusicHandler('./testData', testMusicCallbackFunc)
+music = MusicHandler('./testData', testMusicCallbackFunc)
 # print("blabla")
 # music.play('00', '00')
 # time.sleep(2)
