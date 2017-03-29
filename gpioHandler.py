@@ -36,7 +36,7 @@ class GpioHandler(object):
         # Test Blinking function
         self.dispDrive = HT16K33.HT16K33()
         self.dispDrive.begin()
-        self.dispDrive.set_blink(HT16K33_BLINK_2HZ)
+        self.dispDrive.set_blink(0x02)
         time.sleep(2)
 
 
