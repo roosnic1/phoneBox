@@ -47,15 +47,15 @@ class MyLogger(object):
 def testCallbackFunc(disc, track):
     print('Disc', disc)
     print('Track', track)
-    music.play(disc, track)
+    # music.play(disc, track)
 
 gpio = GpioHandler(testCallbackFunc)
 
 
-def testMusicCallbackFunc(string):
-    print('string', string)
-#
-music = MusicHandler('./testData', testMusicCallbackFunc)
+# def testMusicCallbackFunc(string):
+#     print('string', string)
+# #
+# music = MusicHandler('./testData', testMusicCallbackFunc)
 # print("blabla")
 # music.play('00', '00')
 # time.sleep(2)
