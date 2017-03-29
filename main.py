@@ -5,7 +5,7 @@ import logging.handlers
 import sys
 import time  # this is only being used as part of the example
 
-from musicHandler import MusicHandler
+#from musicHandler import MusicHandler
 
 from gpioHandler import GpioHandler
 
