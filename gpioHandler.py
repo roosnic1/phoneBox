@@ -29,14 +29,14 @@ class GpioHandler(object):
         # Create display instance on default I2C address (0x70) and bus number and clear Display
         self.display = SevenSegment.SevenSegment()
         self.display.begin()
-        self.display.print_number_str('1234')
+        self.display.print_number_str('    ')
         self.display.write_display()
         self.display.clear()
 
         # Test Blinking function
         self.dispDrive = HT16K33.HT16K33()
         self.dispDrive.begin()
-        self.dispDrive.set_blink(0x02)
+        self.dispDrive.set_blink(0x04)
         time.sleep(2)
 
 
