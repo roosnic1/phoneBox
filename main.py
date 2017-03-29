@@ -49,8 +49,6 @@ def testCallbackFunc(disc, track):
     print('Track', track)
     music.play(disc, track)
 
-
-print('start')
 gpio = GpioHandler(testCallbackFunc)
 
 
