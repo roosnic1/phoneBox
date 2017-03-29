@@ -5,26 +5,26 @@ from Adafruit_LED_Backpack import SevenSegment
 from Adafruit_LED_Backpack import HT16K33
 
 
-NUMBER_PIN          = 23
-DAIL_PIN           = 24
 
 
 class GpioHandler(object):
 
     def __init__(self, numberCallback):
         """Init of GPIO Pin
-        Pin 24: dail action 
-        Pin 25: number count"""
+        Pin 23: number count
+        Pin 24: dail action """
+        self.NUMBER_PIN = 23
+        self.DAIL_PIN = 24
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(NUMBER_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        GPIO.setup(DAIL_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        GPIO.add_event_detect(NUMBER_PIN, GPIO.FALLING, callback=self.numberPassesCallback, bouncetime=80)
-        GPIO.add_event_detect(DAIL_PIN, GPIO.BOTH, callback=self.dailCallback, bouncetime=20)
+        GPIO.setup(self.NUMBER_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.setup(self.DAIL_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.add_event_detect(self.NUMBER_PIN, GPIO.FALLING, callback=self.numberPassesCallback, bouncetime=80)
+        GPIO.add_event_detect(self.DAIL_PIN, GPIO.BOTH, callback=self.dailCallback, bouncetime=20)
 
         # Var init
-        self.numCount = 0
         self.numberCallback = numberCallback
         self.numberIter = 0
+
 
         # Create display instance on default I2C address (0x70) and bus number and clear Display
         self.display = SevenSegment.SevenSegment()
@@ -34,10 +34,9 @@ class GpioHandler(object):
         self.display.clear()
 
         # Test Blinking function
-
         self.dispDrive = HT16K33.HT16K33()
         self.dispDrive.begin()
-        self.dispDrive.set_blink('HT16K33_BLINK_HALFHZ')
+        self.dispDrive.set_blink('HT16K33_BLINK_2HZ')
         time.sleep(2)
 
 
@@ -50,7 +49,7 @@ class GpioHandler(object):
 
     def dailCallback(self, Channel):
         time.sleep(0.02)
-        if GPIO.input(DAIL_PIN):
+        if GPIO.input(self.DAIL_PIN):
             if self.numberIter == 0:
                 self.numberDisplay = array('I', [0, 0, 0, 0])
             self.displayRefresher()
