@@ -2,27 +2,43 @@ import RPi.GPIO as GPIO
 import time
 from array import array
 from Adafruit_LED_Backpack import SevenSegment
+from Adafruit_LED_Backpack import HT16K33
+
+
+NUMBER_PIN          = 23
+DAIL_PIN           = 24
+
 
 class GpioHandler(object):
 
     def __init__(self, numberCallback):
+        """Init of GPIO Pin
+        Pin 24: dail action 
+        Pin 25: number count"""
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(23, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        GPIO.setup(24, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.setup(NUMBER_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.setup(DAIL_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.add_event_detect(NUMBER_PIN, GPIO.FALLING, callback=self.numberPassesCallback, bouncetime=80)
+        GPIO.add_event_detect(DAIL_PIN, GPIO.BOTH, callback=self.dailCallback, bouncetime=20)
+
+        # Var init
         self.numCount = 0
         self.numberCallback = numberCallback
-        #self.numberDisplay = array('I', [0, 0, 0, 0])
         self.numberIter = 0
-        GPIO.add_event_detect(23, GPIO.FALLING, callback=self.numberPassesCallback, bouncetime=80)
-        GPIO.add_event_detect(24, GPIO.BOTH, callback=self.wheelCallback, bouncetime=20)
 
-
-        # Create display instance on default I2C address (0x70) and bus number.
+        # Create display instance on default I2C address (0x70) and bus number and clear Display
         self.display = SevenSegment.SevenSegment()
         self.display.begin()
-        self.display.print_number_str('    ')
+        self.display.print_number_str('1234')
         self.display.write_display()
         self.display.clear()
+
+        # Test Blinking function
+
+        self.dispDrive = HT16K33.HT16K33()
+        self.dispDrive.begin()
+        self.dispDrive.set_blink('HT16K33_BLINK_HALFHZ')
+        time.sleep(2)
 
 
     def numberPassesCallback(self, channel):
@@ -32,9 +48,9 @@ class GpioHandler(object):
         self.displayRefresher()
 
 
-    def wheelCallback(self, Channel):
+    def dailCallback(self, Channel):
         time.sleep(0.02)
-        if GPIO.input(24):
+        if GPIO.input(DAIL_PIN):
             if self.numberIter == 0:
                 self.numberDisplay = array('I', [0, 0, 0, 0])
             self.displayRefresher()
