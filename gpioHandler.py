@@ -72,5 +72,5 @@ class GpioHandler(object):
 
     def displayRefresher(self):
         self.display.clear()
-        self.display.print_number_str(''.join(str(x) for x in self.numberDisplay))
+        self.display.print_number_str(''.join(str(x) for x in self.numberDisplay), False)
         self.display.write_display()
