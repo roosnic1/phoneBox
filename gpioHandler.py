@@ -36,7 +36,6 @@ class GpioHandler(object):
         # Test Blinking function
         self.dispDrive = HT16K33.HT16K33()
         self.dispDrive.begin()
-        self.dispDrive.set_blink(0x00)
 
     def numberPassesCallback(self, channel):
         self.numberDisplay[self.numberIter] += 1
@@ -49,7 +48,7 @@ class GpioHandler(object):
         time.sleep(0.02)
         if GPIO.input(self.DAIL_PIN):
             if self.numberIter == 0:
-                self.numberDisplay = array('I', [0, 0, 0, 0])
+                self.numberDisplay.append(0)
             self.displayRefresher()
         else:
             self.numberIter += 1
