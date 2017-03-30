@@ -50,9 +50,7 @@ class GpioHandler(object):
     def dailCallback(self, Channel):
         time.sleep(0.02)
         if GPIO.input(DAIL_PIN):
-            if self.numberIter == 0:
-                self.numberDisplay.append(0)
-            self.displayRefresher()
+            self.numberDisplay.append(0)
         else:
             self.numberIter += 1
             if self.numberIter >= 4:
@@ -68,6 +66,7 @@ class GpioHandler(object):
                 time.sleep(1)
                 self.displayRefresher()
                 self.numberIter = 0
+                self.numberDisplay = []
 
 
     def displayRefresher(self):
