@@ -41,6 +41,9 @@ class GpioHandler(object):
         self.dispDrive.begin()
 
     def numberPassesCallback(self, channel):
+        if self.numberDisplay[self.numberIter] == '-':
+            self.numberDisplay.remove('-')
+            self.numberDisplay.append(0)
         self.numberDisplay[self.numberIter] += 1
         if self.numberDisplay[self.numberIter] == 10:
             self.numberDisplay[self.numberIter] = 0
@@ -50,7 +53,8 @@ class GpioHandler(object):
     def dailCallback(self, Channel):
         time.sleep(0.02)
         if GPIO.input(DAIL_PIN):
-            self.numberDisplay.append(0)
+            self.numberDisplay.append('-')
+            self.displayRefresher()
         else:
             self.numberIter += 1
             if self.numberIter >= 4:
@@ -60,10 +64,12 @@ class GpioHandler(object):
                 if not currentSong[0]:
                     for i,val in enumerate(self.numberDisplay):
                         self.numberDisplay[i] = '-'
+                        self.dispDrive.set_blink(HT16K33.HT16K33_BLINK_2HZ)
                     self.displayRefresher()
                 for i, val in enumerate(currentSong[1]):
                     self.numberDisplay[i] = val
                 time.sleep(1)
+                self.dispDrive.set_blink(HT16K33.HT16K33_BLINK_OFF)
                 self.displayRefresher()
                 self.numberIter = 0
                 self.numberDisplay = []
