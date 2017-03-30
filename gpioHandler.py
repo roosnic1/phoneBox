@@ -4,26 +4,29 @@ from array import array
 from Adafruit_LED_Backpack import SevenSegment
 from Adafruit_LED_Backpack import HT16K33
 
-
+""" Constants
+    Pin 23: number count
+    Pin 24: dail action 
+"""
+NUMBER_PIN = 23
+DAIL_PIN = 24
 
 
 class GpioHandler(object):
 
     def __init__(self, numberCallback):
-        """Init of GPIO Pin
-        Pin 23: number count
-        Pin 24: dail action """
-        self.NUMBER_PIN = 23
-        self.DAIL_PIN = 24
+        """ Init of GPIO Pin
+        """
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(self.NUMBER_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        GPIO.setup(self.DAIL_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        GPIO.add_event_detect(self.NUMBER_PIN, GPIO.FALLING, callback=self.numberPassesCallback, bouncetime=80)
-        GPIO.add_event_detect(self.DAIL_PIN, GPIO.BOTH, callback=self.dailCallback, bouncetime=20)
+        GPIO.setup(NUMBER_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.setup(DAIL_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.add_event_detect(NUMBER_PIN, GPIO.FALLING, callback=self.numberPassesCallback, bouncetime=80)
+        GPIO.add_event_detect(DAIL_PIN, GPIO.BOTH, callback=self.dailCallback, bouncetime=20)
 
         # Var init
         self.numberCallback = numberCallback
         self.numberIter = 0
+        self.numberDisplay = []
 
 
         # Create display instance on default I2C address (0x70) and bus number and clear Display
@@ -46,7 +49,7 @@ class GpioHandler(object):
 
     def dailCallback(self, Channel):
         time.sleep(0.02)
-        if GPIO.input(self.DAIL_PIN):
+        if GPIO.input(DAIL_PIN):
             if self.numberIter == 0:
                 self.numberDisplay.append(0)
             self.displayRefresher()
