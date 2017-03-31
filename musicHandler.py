@@ -16,6 +16,7 @@ class MusicHandler(object):
 
     def play(self, disc, track):
         songfile = self.musicDir + '/' + disc + '/' + track + '.mp3'
+        print('Songfile', songfile)
         if not os.path.isfile(songfile):
             return self.musicQueue[0][1]
         self.musicQueue.append((songfile, "" + disc + track))
