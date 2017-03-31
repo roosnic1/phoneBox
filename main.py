@@ -47,16 +47,16 @@ class MyLogger(object):
 def testCallbackFunc(disc, track):
     print('Disc', disc)
     print('Track', track)
-    # music.play(disc, track)
+    music.play(disc, track)
 
 gpio = GpioHandler(testCallbackFunc)
 
 music = MusicHandler('./testData', testCallbackFunc)
 music.play('00', '00')
-time.sleep(2)
-music.play('01', '00')
-time.sleep(2)
-music.play('01', '01')
+#time.sleep(2)
+#music.play('01', '00')
+#time.sleep(2)
+#music.play('01', '01')
 i = 0
 print("Starting phoneBox")
 # Loop forever, doing something useful hopefully:
