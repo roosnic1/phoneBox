@@ -25,4 +25,4 @@ class MusicHandler(object):
 
     def nextSong(self):
         self.musicQueue.pop(0)
-        self.currentSong = OMXPlayer(self.musicQueue[0][0], self.nextSong, start_playback=True)
+        OMXPlayer(self.musicQueue[0][0], self.nextSong, start_playback=True)
