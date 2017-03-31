@@ -62,8 +62,7 @@ class GpioHandler(object):
                 songID = ''.join(str(x) for x in self.numberDisplay[2:])
                 currentSong = self.numberCallback(discID, songID)
                 print('currentSong', currentSong)
-                for i, val in enumerate(currentSong):
-                    self.numberDisplay[i] = val
+                
 
                 # currentSong = self.numberCallback(discID, songID)
                 # if not currentSong[0]:
