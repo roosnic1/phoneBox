@@ -18,7 +18,7 @@ class MusicHandler(object):
         songfile = self.musicDir + '/' + disc + '/' + track + '.mp3'
         if not os.path.isfile(songfile):
             return self.musicQueue[0][1]
-        self.musicQueue.append((songfile, disc + track))
+        self.musicQueue.append((songfile, "" + disc + track))
         if self.currentSong is None:
             self.currentSong = OMXPlayer(self.musicQueue[0][0], self.nextSong, start_playback=True)
         return self.musicQueue[0][1]
