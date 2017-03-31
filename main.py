@@ -5,7 +5,7 @@ import logging.handlers
 import sys
 import time  # this is only being used as part of the example
 
-#from musicHandler import MusicHandler
+from musicHandler import MusicHandler
 
 from gpioHandler import GpioHandler
 
@@ -51,18 +51,12 @@ def testCallbackFunc(disc, track):
 
 gpio = GpioHandler(testCallbackFunc)
 
-
-# def testMusicCallbackFunc(string):
-#     print('string', string)
-# #
-# music = MusicHandler('./testData', testMusicCallbackFunc)
-# print("blabla")
-# music.play('00', '00')
-# time.sleep(2)
-# music.play('01', '00')
-# time.sleep(2)
-# music.play('01', '01')
-#
+music = MusicHandler('./testData', testCallbackFunc)
+music.play('00', '00')
+time.sleep(2)
+music.play('01', '00')
+time.sleep(2)
+music.play('01', '01')
 i = 0
 print("Starting phoneBox")
 # Loop forever, doing something useful hopefully:
