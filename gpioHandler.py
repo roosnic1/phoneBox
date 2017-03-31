@@ -60,16 +60,17 @@ class GpioHandler(object):
             if self.numberIter >= 4:
                 discID = ''.join(str(x) for x in self.numberDisplay[:2])
                 songID = ''.join(str(x) for x in self.numberDisplay[2:])
-                currentSong = self.numberCallback(discID, songID)
-                if not currentSong[0]:
-                    for i,val in enumerate(self.numberDisplay):
-                        self.numberDisplay[i] = '-'
-                        self.dispDrive.set_blink(HT16K33.HT16K33_BLINK_2HZ)
-                    self.displayRefresher()
-                for i, val in enumerate(currentSong[1]):
-                    self.numberDisplay[i] = val
-                time.sleep(1)
-                self.dispDrive.set_blink(HT16K33.HT16K33_BLINK_OFF)
+                self.numberDisplay = self.numberCallback(discID, songID)
+                # currentSong = self.numberCallback(discID, songID)
+                # if not currentSong[0]:
+                #     for i,val in enumerate(self.numberDisplay):
+                #         self.numberDisplay[i] = '-'
+                #         self.dispDrive.set_blink(HT16K33.HT16K33_BLINK_2HZ)
+                #     self.displayRefresher()
+                # for i, val in enumerate(currentSong[1]):
+                #     self.numberDisplay[i] = val
+                # time.sleep(1)
+                # self.dispDrive.set_blink(HT16K33.HT16K33_BLINK_OFF)
                 self.displayRefresher()
                 self.numberIter = 0
                 self.numberDisplay = []
