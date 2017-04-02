@@ -26,4 +26,7 @@ class MusicHandler(object):
 
     def nextSong(self):
         self.musicQueue.pop(0)
-        OMXPlayer(self.musicQueue[0][0], self.nextSong, start_playback=True)
+        self.currentSong = OMXPlayer(self.musicQueue[0][0], self.nextSong, start_playback=True)
+
+    def stop(self):
+        self.currentSong.stop()
