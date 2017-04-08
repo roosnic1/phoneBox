@@ -54,7 +54,7 @@ class GpioHandler(object):
         time.sleep(0.02)
         if GPIO.input(DAIL_PIN):
             if len(self.numberDisplay) > 0:
-                self.numberDisplay = ''
+                self.numberDisplay = []
             self.numberDisplay.append('-')
             self.displayRefresher()
         else:
