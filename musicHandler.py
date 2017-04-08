@@ -14,7 +14,13 @@ class song(object):
         return self.filePath
 
     def getString(self):
-        return str(self.disc) + str(self.track)
+        disc = str(self.disc)
+        track = str(self.track)
+        if len(disc) == 1:
+            disc = '0' + disc
+        if len(track) == 1:
+            track = '0' + track
+        return disc + track
 
     #def __str__(self):
         #return '' +  self.disc + self.track
