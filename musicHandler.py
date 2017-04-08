@@ -41,7 +41,7 @@ class MusicHandler(object):
     def nextSong(self):
         if len(self.musicQueue) == 1:
             tmp = self.musicQueue[0].getDiscTrack()
-            while not self.play(tmp[0],tmp[1] + 1)[0]:
+            while not self.play(str(tmp[0]), str(tmp[1] + 1))[0]:
                 if tmp[0] >= 99:
                     tmp = 0,0
                 else:
