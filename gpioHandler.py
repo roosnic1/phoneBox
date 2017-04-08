@@ -44,6 +44,8 @@ class GpioHandler(object):
         if self.numberDisplay[self.numberIter] == '-':
             self.numberDisplay.remove('-')
             self.numberDisplay.append(0)
+        print('numberDisplay', self.numberDisplay[0])
+        print('numberIter', self.numberIter)
         self.numberDisplay[self.numberIter] += 1
         if self.numberDisplay[self.numberIter] == 10:
             self.numberDisplay[self.numberIter] = 0
@@ -79,9 +81,9 @@ class GpioHandler(object):
 
     def setDisplayTo(self, displayString):
         print('displayString', displayString)
-        for i, val in enumerate(displayString):
-            self.numberDisplay[i] = val
-        self.displayRefresher()
+        #for i, val in enumerate(displayString):
+        #    self.numberDisplay[i] = val
+        #self.displayRefresher()
 
 
     def displayRefresher(self):
