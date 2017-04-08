@@ -41,6 +41,8 @@ class GpioHandler(object):
         self.dispDrive.begin()
 
     def numberPassesCallback(self, channel):
+        print('numberDisplayFirst', self.numberDisplay[0])
+        print('numberIterFirst', self.numberIter)
         if self.numberDisplay[self.numberIter] == '-':
             self.numberDisplay.remove('-')
             self.numberDisplay.append(0)
@@ -55,6 +57,7 @@ class GpioHandler(object):
     def dailCallback(self, Channel):
         time.sleep(0.02)
         if GPIO.input(DAIL_PIN):
+            print('selfnumberdisplay', self.numberDisplay)
             if len(self.numberDisplay) > 0:
                 self.numberDisplay = []
             self.numberDisplay.append('-')
