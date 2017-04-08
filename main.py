@@ -50,7 +50,7 @@ def testCallbackFunc(disc, track):
 gpio = GpioHandler(testCallbackFunc)
 
 music = MusicHandler('./testData', testCallbackFunc)
-music.play('00', '00')
+music.play('11', '11')
 #time.sleep(2)
 #music.play('01', '00')
 #time.sleep(2)
