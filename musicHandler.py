@@ -20,5 +20,8 @@ class MusicHandler(object):
         return True, self.musicQueue[0][1]
 
     def nextSong(self):
-        self.musicQueue.pop(0)
-        OMXPlayer(self.musicQueue[0][0], self.nextSong, start_playback=True)
+        if len(self.musicQueue) > 0:
+            self.musicQueue.pop(0)
+            OMXPlayer(self.musicQueue[0][0], self.nextSong, start_playback=True)
+        else:
+            print('No more Songs to play')
