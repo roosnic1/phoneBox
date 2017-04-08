@@ -26,7 +26,7 @@ class GpioHandler(object):
         # Var init
         self.numberCallback = numberCallback
         self.numberIter = 0
-        self.numberDisplay = []
+        self.numberDisplay = ['    ']
 
 
         # Create display instance on default I2C address (0x70) and bus number and clear Display
@@ -73,12 +73,13 @@ class GpioHandler(object):
                 self.dispDrive.set_blink(HT16K33.HT16K33_BLINK_OFF)
                 self.displayRefresher()
                 self.numberIter = 0
-                self.numberDisplay = []
+                self.numberDisplay = ['    ']
 
     def setDisplayTo(self, displayString):
         print('displayString', displayString)
         for i, val in enumerate(displayString):
             self.numberDisplay[i] = val
+        self.displayRefresher()
 
 
     def displayRefresher(self):
