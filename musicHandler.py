@@ -36,6 +36,7 @@ class MusicHandler(object):
         self.musicQueue.append(song(songfile, disc, track))
         if self.currentSong is None:
             self.currentSong = OMXPlayer(self.musicQueue[0].getFile(), self.nextSong, start_playback=True)
+            self.setDisplayCallback(self.musicQueue[0].getString())
         return True, self.musicQueue[0].getString()
 
     def nextSong(self):
@@ -48,3 +49,4 @@ class MusicHandler(object):
                     tmp = tmp[0] + 1, 0
         self.musicQueue.pop(0)
         OMXPlayer(self.musicQueue[0].getFile(), self.nextSong, start_playback=True)
+        self.setDisplayCallback(self.musicQueue[0].getString())
