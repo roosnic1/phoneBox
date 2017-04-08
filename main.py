@@ -54,7 +54,7 @@ def musicCallback(displayString):
 gpio = GpioHandler(gpioCallback)
 
 music = MusicHandler('./testData', musicCallback)
-music.play('11', '11')
+music.play('00', '00')
 #time.sleep(2)
 #music.play('01', '00')
 #time.sleep(2)
