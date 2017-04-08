@@ -53,7 +53,7 @@ class MusicHandler(object):
                     print('Reach the end')
                     break
                 else:
-                    tmp = tmp[0] + 1, 0
+                    tmp = tmp[0] + 1, -1
         self.musicQueue.pop(0)
         OMXPlayer(self.musicQueue[0].getFile(), self.nextSong, start_playback=True)
         self.setDisplayCallback(self.musicQueue[0].getString())
