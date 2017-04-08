@@ -2,22 +2,22 @@ from pyomxplayer import OMXPlayer
 import os.path
 
 class song(object):
-    def __init__(self, filePath, disc, track):
-        self.filePath = filePath
+    def __init__(self, musicDir, disc, track):
+        self.filePath = musicDir + '/' + str(disc) + '/' + str(track) + '.mp3'
         self.disc = disc
         self.track = track
 
     def getDiscTrack(self):
-        return int(self.disc), int(self.track)
+        return self.disc, self.track
 
     def getFile(self):
         return self.filePath
 
     def getString(self):
-        return '' +  self.disc + self.track
+        return str(self.disc) + str(self.track)
 
-    def __str__(self):
-        return '' +  self.disc + self.track
+    #def __str__(self):
+        #return '' +  self.disc + self.track
 
 
 
@@ -30,10 +30,10 @@ class MusicHandler(object):
         self.setDisplayCallback = setDisplayCallback
 
     def play(self, disc, track):
-        songfile = self.musicDir + '/' + disc + '/' + track + '.mp3'
-        if not os.path.isfile(songfile):
+        newSong = song(self.musicDir, disc, track)
+        if not os.path.isfile(newSong.getFile()):
             return False, self.musicQueue[0].getString()
-        self.musicQueue.append(song(songfile, disc, track))
+        self.musicQueue.append(newSong)
         if self.currentSong is None:
             self.currentSong = OMXPlayer(self.musicQueue[0].getFile(), self.nextSong, start_playback=True)
             self.setDisplayCallback(self.musicQueue[0].getString())
@@ -42,7 +42,7 @@ class MusicHandler(object):
     def nextSong(self):
         if len(self.musicQueue) == 1:
             tmp = self.musicQueue[0].getDiscTrack()
-            while not self.play(str(tmp[0]), str(tmp[1] + 1))[0]:
+            while not self.play(tmp[0], tmp[1] + 1)[0]:
                 if tmp[0] >= 99:
                     print('Reach the end')
                     break
