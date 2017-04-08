@@ -66,7 +66,7 @@ class GpioHandler(object):
                 if not currentSong[0]:
                     for i,val in enumerate(self.numberDisplay):
                         self.numberDisplay[i] = '-'
-                        self.dispDrive.set_blink(HT16K33.HT16K33_BLINK_2HZ)
+                    self.dispDrive.set_blink(HT16K33.HT16K33_BLINK_2HZ)
                     self.displayRefresher()
                 for i, val in enumerate(currentSong[1]):
                     self.numberDisplay[i] = val
