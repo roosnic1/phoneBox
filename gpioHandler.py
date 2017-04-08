@@ -75,6 +75,11 @@ class GpioHandler(object):
                 self.numberIter = 0
                 self.numberDisplay = []
 
+    def setDisplayTo(self, displayString):
+        print('displayString', displayString)
+        for i, val in enumerate(displayString):
+            self.numberDisplay[i] = val
+
 
     def displayRefresher(self):
         self.display.clear()

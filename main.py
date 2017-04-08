@@ -48,8 +48,7 @@ def gpioCallback(disc, track):
     return music.play(disc, track)
 
 def musicCallback(displayString):
-    pass
-    #gpio.setDisplayTo(displayString)
+    gpio.setDisplayTo(displayString)
 
 gpio = GpioHandler(gpioCallback)
 
