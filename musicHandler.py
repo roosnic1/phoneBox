@@ -44,6 +44,7 @@ class MusicHandler(object):
             tmp = self.musicQueue[0].getDiscTrack()
             while not self.play(str(tmp[0]), str(tmp[1] + 1))[0]:
                 if tmp[0] >= 99:
+                    print('Reach the end')
                     break
                 else:
                     tmp = tmp[0] + 1, 0
