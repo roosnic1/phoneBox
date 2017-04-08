@@ -76,6 +76,7 @@ class GpioHandler(object):
                 self.numberDisplay = []
 
     def setDisplayTo(self, displayString):
+        print('displayString', displayString)
         for i, val in enumerate(displayString):
             self.numberDisplay[i] = val
 
