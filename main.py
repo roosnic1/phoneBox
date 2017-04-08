@@ -45,9 +45,7 @@ class MyLogger(object):
 # sys.stderr = MyLogger(logger, logging.ERROR)
 
 def testCallbackFunc(disc, track):
-    print('Disc', disc)
-    print('Track', track)
-    music.play(disc, track)
+    return music.play(disc, track)
 
 gpio = GpioHandler(testCallbackFunc)
 
