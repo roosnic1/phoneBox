@@ -69,7 +69,7 @@ class GpioHandler(object):
                     self.displayRefresher()
                 for i, val in enumerate(currentSong[1]):
                     self.numberDisplay[i] = val
-                time.sleep(1)
+                time.sleep(2)
                 self.dispDrive.set_blink(HT16K33.HT16K33_BLINK_OFF)
                 self.displayRefresher()
                 self.numberIter = 0
