@@ -44,12 +44,16 @@ class MyLogger(object):
 # Replace stderr with logging to file at ERROR level
 # sys.stderr = MyLogger(logger, logging.ERROR)
 
-def testCallbackFunc(disc, track):
+def gpioCallback(disc, track):
     return music.play(disc, track)
 
-gpio = GpioHandler(testCallbackFunc)
+def musicCallback(displayString):
+    pass
+    #gpio.setDisplayTo(displayString)
 
-music = MusicHandler('./testData', testCallbackFunc)
+gpio = GpioHandler(gpioCallback)
+
+music = MusicHandler('./testData', musicCallback)
 music.play('00', '00')
 #time.sleep(2)
 #music.play('01', '00')
