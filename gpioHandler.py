@@ -3,6 +3,7 @@ import time
 from array import array
 from Adafruit_LED_Backpack import SevenSegment
 from Adafruit_LED_Backpack import HT16K33
+from threading import _Timer
 
 """ Constants
     Pin 23: number count
@@ -27,7 +28,10 @@ class GpioHandler(object):
         self.numberCallback = numberCallback
         self.numberIter = 0
         self.numberDisplay = ['','','','']
+        self.lookFlag = False
 
+        # Timer initialization
+        self.t = _Timer(30.0, self.timeoutTimmer())
 
         # Create display instance on default I2C address (0x70) and bus number and clear Display
         self.display = SevenSegment.SevenSegment()
@@ -41,13 +45,9 @@ class GpioHandler(object):
         self.dispDrive.begin()
 
     def numberPassesCallback(self, channel):
-        print('numberDisplayFirst', self.numberDisplay[0])
-        print('numberIterFirst', self.numberIter)
         if self.numberDisplay[self.numberIter] == '-':
             self.numberDisplay.remove('-')
             self.numberDisplay.append(0)
-        print('numberDisplay', self.numberDisplay[0])
-        print('numberIter', self.numberIter)
         self.numberDisplay[self.numberIter] += 1
         if self.numberDisplay[self.numberIter] == 10:
             self.numberDisplay[self.numberIter] = 0
@@ -57,11 +57,13 @@ class GpioHandler(object):
     def dailCallback(self, Channel):
         time.sleep(0.02)
         if GPIO.input(DAIL_PIN):
-
             if len(self.numberDisplay) > 0 and self.numberIter == 0:
                 self.numberDisplay = []
+                self.lookFlag = True
             self.numberDisplay.append('-')
             self.displayRefresher()
+            if (self.t.isAlive()):
+                self.t.cancel()
         else:
             self.numberIter += 1
             if self.numberIter >= 4:
@@ -81,12 +83,19 @@ class GpioHandler(object):
                 self.displayRefresher()
                 self.numberIter = 0
                 self.numberDisplay = ['','','','']
+                self.lookFlag = False
+            else:
+                self.t.start()
+
+
+    def timeoutTimmer(self):
+        print('timeout :(')
 
     def setDisplayTo(self, displayString):
-        print('displayString', displayString)
-        #for i, val in enumerate(displayString):
-        #    self.numberDisplay[i] = val
-        #self.displayRefresher()
+        if (self.lookFlag == False):
+            for i, val in enumerate(displayString):
+                self.numberDisplay[i] = val
+            self.displayRefresher()
 
 
     def displayRefresher(self):
