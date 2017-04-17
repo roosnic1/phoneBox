@@ -46,6 +46,8 @@ class MyLogger(object):
 # sys.stderr = MyLogger(logger, logging.ERROR)
 
 def main():
+    global music
+
     def gpioCallback(disc, track):
         return music.play(disc, track)
 
@@ -64,6 +66,7 @@ def main():
             time.sleep(0.5)
     except KeyboardInterrupt:
         print "Shutdown requested...exiting"
+        music.stop()
     except Exception:
         traceback.print_exc(file=sys.stdout)
     sys.exit(0)

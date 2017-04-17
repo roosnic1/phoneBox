@@ -59,4 +59,5 @@ class MusicHandler(object):
         self.setDisplayCallback(self.musicQueue[0].getString())
 
     def stop(self):
+        print('Stopping Music player')
         self.currentSong.stop()
