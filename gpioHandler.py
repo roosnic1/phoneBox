@@ -1,9 +1,10 @@
 import RPi.GPIO as GPIO
 import time
+import threading
 from array import array
 from Adafruit_LED_Backpack import SevenSegment
 from Adafruit_LED_Backpack import HT16K33
-from threading import _Timer
+
 
 """ Constants
     Pin 23: number count
@@ -31,7 +32,8 @@ class GpioHandler(object):
         self.lookFlag = False
 
         # Timer initialization
-        self.t = _Timer(10.0, self.timeoutTimmer())
+        self.t = threading.Timer(10.0, self.timeoutTimmer())
+
 
         # Create display instance on default I2C address (0x70) and bus number and clear Display
         self.display = SevenSegment.SevenSegment()
@@ -62,8 +64,9 @@ class GpioHandler(object):
                 self.lookFlag = True
             self.numberDisplay.append('-')
             self.displayRefresher()
-            if (self.t.isAlive()):
-                self.t.cancel()
+            #if (self.t.isAlive()):
+            print('Timer status:', self.t.isAlive())
+            self.t.cancel()
         else:
             self.numberIter += 1
             if self.numberIter >= 4:
