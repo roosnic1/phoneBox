@@ -84,7 +84,7 @@ class GpioHandler(object):
                 self.numberIter = 0
                 self.numberDisplay = ['','','','']
                 self.lookFlag = False
-            else:
+            #else:
                 #self.t.start()
 
 
