@@ -64,9 +64,9 @@ class GpioHandler(object):
                 self.lookFlag = True
             self.numberDisplay.append('-')
             self.displayRefresher()
-            #if (self.t.isAlive()):
             print('Timer status:', self.t.isAlive())
-            self.t.cancel()
+            if (self.t.isAlive()):
+                self.t.cancel()
         else:
             self.numberIter += 1
             if self.numberIter >= 4:
