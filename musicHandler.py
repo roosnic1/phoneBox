@@ -38,17 +38,17 @@ class MusicHandler(object):
     def play(self, disc, track):
         newSong = song(self.musicDir, disc, track)
         if not os.path.isfile(newSong.getFile()):
-            return False, self.musicQueue[0].getString()
+            return False
         self.musicQueue.append(newSong)
         if self.currentSong is None:
             self.currentSong = OMXPlayer(self.musicQueue[0].getFile(), self.nextSong, start_playback=True)
             self.setDisplayCallback(self.musicQueue[0].getString())
-        return True, self.musicQueue[0].getString()
+        return True
 
     def nextSong(self):
         if len(self.musicQueue) == 1:
             tmp = self.musicQueue[0].getDiscTrack()
-            while not self.play(tmp[0], tmp[1] + 1)[0]:
+            while not self.play(tmp[0], tmp[1] + 1):
                 if tmp[0] >= 99:
                     print('Reach the end')
                     break

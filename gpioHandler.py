@@ -29,11 +29,11 @@ class GpioHandler(object):
         self.numberCallback = numberCallback
         self.numberIter = 0
         self.numberDisplay = ['','','','']
+        self.numberDisplayOld = ['','','','']
         self.lookFlag = False
 
         # Timer initialization
-        self.t = threading.Timer(10.0, self.timeoutTimmer())
-
+        self.t = threading.Timer(10.0, self.timeoutTimmer)
 
         # Create display instance on default I2C address (0x70) and bus number and clear Display
         self.display = SevenSegment.SevenSegment()
@@ -60,45 +60,55 @@ class GpioHandler(object):
         time.sleep(0.02)
         if GPIO.input(DAIL_PIN):
             if len(self.numberDisplay) > 0 and self.numberIter == 0:
+                self.numberDisplayOld = list(self.numberDisplay)
                 self.numberDisplay = []
                 self.lookFlag = True
             self.numberDisplay.append('-')
             self.displayRefresher()
             print('Timer status:', self.t.isAlive())
-            if (self.t.isAlive()):
+            if self.t and self.t.isAlive():
                 self.t.cancel()
         else:
             self.numberIter += 1
             if self.numberIter >= 4:
                 discID = ''.join(str(x) for x in self.numberDisplay[:2])
                 songID = ''.join(str(x) for x in self.numberDisplay[2:])
-                currentSong = self.numberCallback(int(discID), int(songID))
-                print('currentSong', currentSong[0])
-                if not currentSong[0]:
+                songExists = self.numberCallback(int(discID), int(songID))
+                print('currentSong', songExists)
+                self.dispDrive.set_blink(HT16K33.HT16K33_BLINK_2HZ)
+                if not songExists:
                     for i,val in enumerate(self.numberDisplay):
                         self.numberDisplay[i] = '-'
-                    self.dispDrive.set_blink(HT16K33.HT16K33_BLINK_2HZ)
                     self.displayRefresher()
-                for i, val in enumerate(currentSong[1]):
-                    self.numberDisplay[i] = val
                 time.sleep(2)
                 self.dispDrive.set_blink(HT16K33.HT16K33_BLINK_OFF)
+                self.numberDisplay = list(self.numberDisplayOld)
                 self.displayRefresher()
                 self.numberIter = 0
                 self.numberDisplay = ['','','','']
                 self.lookFlag = False
             else:
+                if self.t:
+                    self.t = threading.Timer(10.0, self.timeoutTimmer)
                 self.t.start()
 
 
     def timeoutTimmer(self):
         print('timeout :(')
+        self.numberDisplay = list(self.numberDisplayOld)
+        self.displayRefresher()
+        self.numberIter = 0
+        self.numberDisplay = ['', '', '', '']
+        self.lookFlag = False
 
     def setDisplayTo(self, displayString):
-        if (self.lookFlag == False):
-            for i, val in enumerate(displayString):
-                self.numberDisplay[i] = val
-            self.displayRefresher()
+            if self.lookFlag == False:
+                for i, val in enumerate(displayString):
+                    self.numberDisplay[i] = val
+                self.displayRefresher()
+            else:
+                for i, val in enumerate(displayString):
+                    self.numberDisplayOld[i] = val
 
 
     def displayRefresher(self):
