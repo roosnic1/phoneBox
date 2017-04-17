@@ -3,6 +3,7 @@
 import logging
 import logging.handlers
 import sys
+import traceback
 import time  # this is only being used as part of the example
 
 from musicHandler import MusicHandler
@@ -44,23 +45,31 @@ class MyLogger(object):
 # Replace stderr with logging to file at ERROR level
 # sys.stderr = MyLogger(logger, logging.ERROR)
 
-def gpioCallback(disc, track):
-    return music.play(disc, track)
+def main():
+    global music
 
-def musicCallback(displayString):
-    gpio.setDisplayTo(displayString)
+    def gpioCallback(disc, track):
+        return music.play(disc, track)
 
-gpio = GpioHandler(gpioCallback)
+    def musicCallback(displayString):
+        gpio.setDisplayTo(displayString)
 
-music = MusicHandler('./testData', musicCallback)
-music.play(0, 0)
-#time.sleep(2)
-#music.play('01', '00')
-#time.sleep(2)
-#music.play('01', '01')
-i = 0
-print("Starting phoneBox")
-# Loop forever, doing something useful hopefully:
-while True:
-    i += 1
-    time.sleep(5)
+    try:
+        gpio = GpioHandler(gpioCallback)
+        music = MusicHandler('./testData', musicCallback)
+        music.play(0, 0)
+        print("Starting phoneBox")
+        # Loop forever, doing something useful hopefully:
+        i = 0
+        while True:
+            i += 1
+            time.sleep(0.5)
+    except KeyboardInterrupt:
+        print "Shutdown requested...exiting"
+        music.stop()
+    except Exception:
+        traceback.print_exc(file=sys.stdout)
+    sys.exit(0)
+
+if __name__ == "__main__":
+    main()
