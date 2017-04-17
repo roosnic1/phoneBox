@@ -3,6 +3,7 @@ import time
 from array import array
 from Adafruit_LED_Backpack import SevenSegment
 from Adafruit_LED_Backpack import HT16K33
+from threading import _Timer
 
 """ Constants
     Pin 23: number count
@@ -26,8 +27,11 @@ class GpioHandler(object):
         # Var init
         self.numberCallback = numberCallback
         self.numberIter = 0
-        self.numberDisplay = []
+        self.numberDisplay = ['','','','']
+        self.lookFlag = False
 
+        # Timer initialization
+        #self.t = _Timer(10.0, self.timeoutTimmer())
 
         # Create display instance on default I2C address (0x70) and bus number and clear Display
         self.display = SevenSegment.SevenSegment()
@@ -53,31 +57,45 @@ class GpioHandler(object):
     def dailCallback(self, Channel):
         time.sleep(0.02)
         if GPIO.input(DAIL_PIN):
+            if len(self.numberDisplay) > 0 and self.numberIter == 0:
+                self.numberDisplay = []
+                self.lookFlag = True
             self.numberDisplay.append('-')
             self.displayRefresher()
+            #if (self.t.isAlive()):
+            #    self.t.cancel()
         else:
             self.numberIter += 1
             if self.numberIter >= 4:
                 discID = ''.join(str(x) for x in self.numberDisplay[:2])
                 songID = ''.join(str(x) for x in self.numberDisplay[2:])
-                currentSong = self.numberCallback(discID, songID)
-                print('currentSong', currentSong)
-                for i, val in enumerate(currentSong):
+                currentSong = self.numberCallback(int(discID), int(songID))
+                print('currentSong', currentSong[0])
+                if not currentSong[0]:
+                    for i,val in enumerate(self.numberDisplay):
+                        self.numberDisplay[i] = '-'
+                    self.dispDrive.set_blink(HT16K33.HT16K33_BLINK_2HZ)
+                    self.displayRefresher()
+                for i, val in enumerate(currentSong[1]):
                     self.numberDisplay[i] = val
-
-                # currentSong = self.numberCallback(discID, songID)
-                # if not currentSong[0]:
-                #     for i,val in enumerate(self.numberDisplay):
-                #         self.numberDisplay[i] = '-'
-                #         self.dispDrive.set_blink(HT16K33.HT16K33_BLINK_2HZ)
-                #     self.displayRefresher()
-                # for i, val in enumerate(currentSong[1]):
-                #     self.numberDisplay[i] = val
-                # time.sleep(1)
-                # self.dispDrive.set_blink(HT16K33.HT16K33_BLINK_OFF)
+                time.sleep(2)
+                self.dispDrive.set_blink(HT16K33.HT16K33_BLINK_OFF)
                 self.displayRefresher()
                 self.numberIter = 0
-                self.numberDisplay = []
+                self.numberDisplay = ['','','','']
+                self.lookFlag = False
+            else:
+                #self.t.start()
+
+
+    #def timeoutTimmer(self):
+    #    print('timeout :(')
+
+    def setDisplayTo(self, displayString):
+        if (self.lookFlag == False):
+            for i, val in enumerate(displayString):
+                self.numberDisplay[i] = val
+            self.displayRefresher()
 
 
     def displayRefresher(self):

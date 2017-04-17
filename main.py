@@ -46,15 +46,16 @@ class MyLogger(object):
 # sys.stderr = MyLogger(logger, logging.ERROR)
 
 def main():
-    def testCallbackFunc(disc, track):
-        print('Disc', disc)
-        print('Track', track)
-        music.play(disc, track)
+    def gpioCallback(disc, track):
+        return music.play(disc, track)
+
+    def musicCallback(displayString):
+        gpio.setDisplayTo(displayString)
 
     try:
-        gpio = GpioHandler(testCallbackFunc)
-        music = MusicHandler('./testData', testCallbackFunc)
-        music.play('00', '00')
+        gpio = GpioHandler(gpioCallback)
+        music = MusicHandler('./testData', musicCallback)
+        music.play(0, 0)
         print("Starting phoneBox")
         # Loop forever, doing something useful hopefully:
         i = 0
