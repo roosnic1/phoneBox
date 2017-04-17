@@ -31,7 +31,7 @@ class GpioHandler(object):
         self.lookFlag = False
 
         # Timer initialization
-        #self.t = _Timer(10.0, self.timeoutTimmer())
+        self.t = _Timer(10.0, self.timeoutTimmer())
 
         # Create display instance on default I2C address (0x70) and bus number and clear Display
         self.display = SevenSegment.SevenSegment()
@@ -62,8 +62,8 @@ class GpioHandler(object):
                 self.lookFlag = True
             self.numberDisplay.append('-')
             self.displayRefresher()
-            #if (self.t.isAlive()):
-            #    self.t.cancel()
+            if (self.t.isAlive()):
+                self.t.cancel()
         else:
             self.numberIter += 1
             if self.numberIter >= 4:
@@ -84,12 +84,12 @@ class GpioHandler(object):
                 self.numberIter = 0
                 self.numberDisplay = ['','','','']
                 self.lookFlag = False
-            #else:
-                #self.t.start()
+            else:
+                self.t.start()
 
 
-    #def timeoutTimmer(self):
-    #    print('timeout :(')
+    def timeoutTimmer(self):
+        print('timeout :(')
 
     def setDisplayTo(self, displayString):
         if (self.lookFlag == False):
