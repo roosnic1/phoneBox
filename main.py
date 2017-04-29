@@ -57,11 +57,12 @@ def main():
     try:
         gpio = GpioHandler(gpioCallback)
         music = MusicHandler('./testData', musicCallback)
-        music.play(0, 0)
         print("Starting phoneBox")
         # Loop forever, doing something useful hopefully:
         i = 0
         while True:
+            if not music.isSongPlaying():
+                music.play(0, 0)
             i += 1
             time.sleep(0.5)
     except KeyboardInterrupt:
