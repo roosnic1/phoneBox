@@ -47,6 +47,8 @@ class MusicHandler(object):
         return True
 
     def next_song(self):
+        if self.currentSong is None:
+            self.currentSong = 'Yo Mama'
         if len(self.musicQueue) == 1:
             tmp = self.musicQueue[0].getDiscTrack()
             while not self.play(tmp[0], tmp[1] + 1):
