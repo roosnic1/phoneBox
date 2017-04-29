@@ -62,7 +62,10 @@ def main():
         i = 0
         while True:
             if not music.isSongPlaying() and gpio.isPowerOn():
-                music.play(0, 0)
+                if music.isQueueEmpty():
+                    music.play(0, 0)
+                else:
+                    music.next_song()
             if not gpio.isPowerOn():
                 music.stop()
                 gpio.switchDisplayOff()
