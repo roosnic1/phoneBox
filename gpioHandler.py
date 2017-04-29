@@ -12,6 +12,7 @@ from Adafruit_LED_Backpack import HT16K33
 """
 NUMBER_PIN = 23
 DAIL_PIN = 24
+POWER_PIN = 25
 
 
 class GpioHandler(object):
@@ -22,9 +23,9 @@ class GpioHandler(object):
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(NUMBER_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         GPIO.setup(DAIL_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.setup(POWER_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         GPIO.add_event_detect(NUMBER_PIN, GPIO.FALLING, callback=self.numberPassesCallback, bouncetime=80)
         GPIO.add_event_detect(DAIL_PIN, GPIO.BOTH, callback=self.dailCallback, bouncetime=20)
-
         # Var init
         self.numberCallback = numberCallback
         self.numberIter = 0
@@ -115,3 +116,6 @@ class GpioHandler(object):
         self.display.clear()
         self.display.print_number_str(''.join(str(x) for x in self.numberDisplay), False)
         self.display.write_display()
+
+    def isPowerOn(self):
+        return not GPIO.input(POWER_PIN)
