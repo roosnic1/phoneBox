@@ -61,8 +61,10 @@ def main():
         # Loop forever, doing something useful hopefully:
         i = 0
         while True:
-            if not music.isSongPlaying():
+            if not music.isSongPlaying() and gpio.isPowerOn():
                 music.play(0, 0)
+            if not gpio.isPowerOn():
+                music.stop()
             i += 1
             time.sleep(0.5)
     except KeyboardInterrupt:
