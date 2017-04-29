@@ -61,8 +61,9 @@ class MusicHandler(object):
 
     def stop(self):
         print('Stopping Music player')
-        self.currentSong.stop()
-        self.currentSong = None
+        if self.currentSong is not None:
+            self.currentSong.stop()
+            self.currentSong = None
 
     def isSongPlaying(self):
         return self.currentSong is not None
