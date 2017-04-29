@@ -65,6 +65,7 @@ def main():
                 music.play(0, 0)
             if not gpio.isPowerOn():
                 music.stop()
+                gpio.switchDisplayOff()
             i += 1
             time.sleep(0.5)
     except KeyboardInterrupt:
