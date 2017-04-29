@@ -53,7 +53,7 @@ class MusicHandler(object):
             tmp = self.musicQueue[0].getDiscTrack()
             while not self.play(tmp[0], tmp[1] + 1):
                 if tmp[0] >= 99:
-                    tmp = 0, 0
+                    tmp = 0, -1
                 else:
                     tmp = tmp[0] + 1, -1
         self.musicQueue.pop(0)
