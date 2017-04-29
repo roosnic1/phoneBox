@@ -64,6 +64,8 @@ class MusicHandler(object):
         if self.currentSong is not None:
             self.currentSong.stop()
             self.currentSong = None
+            if len(self.musicQueue) > 0:
+                self.musicQueue.pop(0)
 
     def isSongPlaying(self):
         return self.currentSong is not None
