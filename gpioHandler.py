@@ -119,3 +119,9 @@ class GpioHandler(object):
 
     def isPowerOn(self):
         return not GPIO.input(POWER_PIN)
+
+    def switchDisplayOff(self):
+        self.display.print_number_str('    ')
+        self.display.write_display()
+        self.display.clear()
+
